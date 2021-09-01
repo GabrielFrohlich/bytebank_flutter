@@ -12,7 +12,7 @@ class ContactDao {
   static const String _tableName = 'contacts';
   static const String _id = 'id';
   static const String _name = 'name';
-  static const String _accountNumber = 'account_number';
+  static const String _accountNumber = 'accountNumber';
 
   Future<int>? save(Contact contact) async {
     final Database db = await getDatabase();
@@ -30,7 +30,7 @@ class ContactDao {
     for (Map<String, dynamic> map in result) {
       final Contact contact = Contact(
         map['name'],
-        map['account_number'],
+        map['accountNumber'],
         id: map['id'],
       );
 

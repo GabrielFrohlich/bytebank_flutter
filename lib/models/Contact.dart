@@ -15,6 +15,7 @@ class Contact {
     contactMap['id'] = this.id;
     contactMap['name'] = this.name;
     contactMap['account_number'] = this.accountNumber;
+    contactMap['accountNumber'] = this.accountNumber;
 
     return contactMap;
   }
