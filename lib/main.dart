@@ -1,9 +1,5 @@
-import 'package:byteblank/databases/Database.dart';
-import 'package:byteblank/services/webclient.dart';
+import 'package:byteblank/screens/Dashboard.dart';
 import 'package:flutter/material.dart';
-import 'models/Contact.dart';
-import 'models/Transaction.dart';
-import 'screens/Dashboard.dart';
 
 void main() {
   runApp(ByteBlank());
@@ -15,12 +11,14 @@ class ByteBlank extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        theme: ThemeData(
-            primaryColor: Colors.green[900],
-            accentColor: Colors.blueAccent[700],
-            buttonTheme: ButtonThemeData(
-                buttonColor: Colors.blueAccent[700],
-                textTheme: ButtonTextTheme.primary)),
-        home: Dashboard());
+      theme: ThemeData(
+        primaryColor: Colors.green[900],
+        accentColor: Colors.blueAccent[700],
+        buttonTheme: ButtonThemeData(
+            buttonColor: Colors.blueAccent[700],
+            textTheme: ButtonTextTheme.primary),
+      ),
+      home: Dashboard(),
+    );
   }
 }
