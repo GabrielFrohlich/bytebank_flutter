@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:byteblank/components/progress.dart';
 import 'package:byteblank/components/response_dialog.dart';
 import 'package:byteblank/components/transaction_auth_dialog.dart';
 import 'package:byteblank/models/Contact.dart';
@@ -21,6 +22,7 @@ class _TransactionFormState extends State<TransactionForm> {
   final TextEditingController _valueController = TextEditingController();
   final TransactionWebClient _webClient = TransactionWebClient();
   final String transactionId = Uuid().v4();
+  bool _progressVisible = false;
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +36,13 @@ class _TransactionFormState extends State<TransactionForm> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
+              Visibility(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Progress(),
+                ),
+                visible: _progressVisible,
+              ),
               Text(
                 widget.contact.name,
                 style: TextStyle(
@@ -109,6 +118,9 @@ class _TransactionFormState extends State<TransactionForm> {
 
   Future<Transaction?> _send(Transaction transactionCreated, String password,
       BuildContext context, String transactionId) async {
+    setState(() {
+      _progressVisible = true;
+    });
     final Transaction? transaction = await _webClient
         .save(transactionCreated, password)
         .catchError((onError) {
@@ -117,6 +129,10 @@ class _TransactionFormState extends State<TransactionForm> {
       _showFailureMessage(context, message: onError.message);
     }, test: (onError) => onError is HttpException).catchError((onError) {
       _showFailureMessage(context);
+    }).whenComplete(() {
+      setState(() {
+        _progressVisible = false;
+      });
     });
 
     return transaction;
